@@ -1,9 +1,9 @@
 1. One-time setup
     Parsing
-        check_file_validity(): verify if the .obj file exist and can be read 
+        is_valid_file(): verify if the .obj file exist and can be read 
         parse_obj_file(): read file line to line
             extract_vertices(): Get vertices (v)
-            extract_faces() :Get faces idx (f)
+            extract_faces() :Get faces idx (f) (faces are the triangles for draw)
         build_mesh() : regroup data
 
     Context
