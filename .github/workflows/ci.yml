@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies (Rust & Vulkan)
         run: |
           dnf update -y
-          dnf install -y gcc rust cargo vulkan-headers vulkan-loader-devel
+          dnf install -y gcc rust cargo rustfmt clippy vulkan-headers vulkan-loader-devel
 
       - name: Check Formatting
         run: cargo fmt --all -- --check
