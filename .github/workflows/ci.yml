@@ -1,9 +1,9 @@
 name: SCOP CI
 
 on:
-  push: # S'activera sur TOUTES les branches à chaque push
+  push: 
   pull_request:
-    branches: [ "main" ] # S'activera quand on cherchera à fusionner sur main
+    branches: [ "main" ]
 
 jobs:
   test_and_lint:
@@ -15,16 +15,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install System Dependencies
+      - name: Install System Dependencies (C, C++, Vulkan)
+        # On utilise dnf UNIQUEMENT pour les dépendances de l'OS
         run: |
           dnf update -y
-          dnf install -y gcc curl vulkan-headers vulkan-loader-devel
+          dnf install -y gcc gcc-c++ make vulkan-headers vulkan-loader-devel
 
-      - name: Install Rust toolchain (rustup)
-        # On utilise l'installateur officiel pour avoir cargo, rustfmt et clippy parfaitement liés
-        run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal --component rustfmt clippy
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+      - name: Setup Rust Toolchain
+        # L'action officielle qui gère parfaitement Rust, Cargo, Clippy et rustfmt
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
 
       - name: Check Formatting
         run: cargo fmt --all -- --check
