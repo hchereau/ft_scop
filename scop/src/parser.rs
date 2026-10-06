@@ -21,7 +21,7 @@ fn extract_vertices(file_content: &str) -> Result<Vec<Vertex>, String> {
     let default_color = Color {r: 255, g: 255, b: 255, alpha: 255};
     let vertices: Result<Vec<Vertex>, String> = file_content
        .lines()
-       .filter(|line| line.start_with("v "))
+       .filter(|line| line.starts_with("v "))
        .map(|line| {
            let mut parts = line.split_whitespace();
            parts.next();
