@@ -28,10 +28,13 @@ jobs:
           components: rustfmt, clippy
 
       - name: Check Formatting
+        working-directory: ./scop
         run: cargo fmt --all -- --check
 
       - name: Lint with Clippy
+        working-directory: ./scop
         run: cargo clippy --all-targets -- -D warnings
 
       - name: Run Unit Tests
+        working-directory: ./scop
         run: cargo test --verbose
