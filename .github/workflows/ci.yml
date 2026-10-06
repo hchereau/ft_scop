@@ -1,0 +1,31 @@
+name: SCOP CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test_and_lint:
+    name: Fedora Build & Test
+    runs-on: ubuntu-latest
+    container: fedora:latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Rust & Vulkan)
+        run: |
+          dnf update -y
+          dnf install -y gcc rust cargo vulkan-headers vulkan-loader-devel
+
+      - name: Check Formatting
+        run: cargo fmt --all -- --check
+
+      - name: Lint with Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Run Unit Tests
+        run: cargo test --verbose
