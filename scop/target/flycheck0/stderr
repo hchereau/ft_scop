@@ -1,1 +1,2 @@
-error: process didn't exit successfully: `C:\Users\Neo65\.rustup\toolchains\stable-x86_64-pc-windows-msvc\bin\rustc.exe -vV` (exit code: 0xc0e90002)
+    Checking scop v0.1.0 (C:\Users\Neo65\Documents\code\ft_scop\scop)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.13s

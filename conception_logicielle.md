@@ -1,4 +1,4 @@
-1. One-time setup
+ 1. One-time setup
     Parsing
         is_valid_file(): verify if the .obj file exist and can be read 
         parse_obj_file(): read file line to line
@@ -24,4 +24,4 @@
 
     Draw call
         send_uniforms_to_gpu(): send new matrix and texture level transition to vulkan
-        draw_frame() : Ask to vulkan to calculate the final image and display it in the window
+      draw_frame() : Ask to vulkan to calculate the final image and display it in the window

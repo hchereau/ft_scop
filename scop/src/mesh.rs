@@ -13,6 +13,7 @@ pub struct Face {
     pub v3: u32,
 }
 
+#[derive(Clone, Copy)]
 #[repr(C)]
 pub struct Color {
     pub r: u8,
