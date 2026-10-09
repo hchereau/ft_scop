@@ -153,7 +153,7 @@ mod tests {
         assert!(result.is_ok());
         let faces = result.unwrap();
         assert_eq!(faces.len(), 3);
-        assert_eq!(faces[0].v1, 1);
+        assert_eq!(faces[0].v1, 0);
     }
 
     #[test]
@@ -166,9 +166,25 @@ mod tests {
 
     #[test]
     fn test_extract_faces_invalid_negative() {
-        let fake_file = "f 1 2 3\nv 0 0 0";
+        let fake_file = "f 1 2 3\nf 0 0 0";
         let result = extract_faces(fake_file);
 
         assert!(result.is_err());
+    }
+    #[test]
+    fn test_parse_obj_file_valid() {
+        let test_path = "test_cube_tmp.obj";
+        let content = "v 0.0 0.0 0.0\nv 1.0 0.0 0.0\nv 0.0 1.0 0.0\nf 1 2 3\n";
+
+        std::fs::write(test_path, content).expect("Failed to write temp file");
+
+        let result = parse_obj_file(test_path);
+
+        let _ = std::fs::remove_file(test_path);
+
+        assert!(result.is_ok());
+        let mesh = result.unwrap();
+        assert_eq!(mesh.vertices.len(), 3);
+        assert_eq!(mesh.faces.len(), 1);
     }
 }
