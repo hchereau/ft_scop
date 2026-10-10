@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["extract_faces","extract_vertices","is_valid_file","parse_face","parse_obj_file","parse_vertex","read_file_to_string"]};

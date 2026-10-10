@@ -15,8 +15,7 @@ fn read_file_to_string(file_path: &str) -> Result<String, String> {
     Ok(content_file)
 }
 
-///
-fn parse_vertex(line: &str, default_color: &Color) -> Result<Vertex, String> {
+fn parse_vertex(line: &str, default_color: Color) -> Result<Vertex, String> {
     let mut parts = line.split_whitespace();
     parts.next();
     let mut parse_coord = |missing_err: &str, parse_err: &str| -> Result<f32, String> {
@@ -31,7 +30,7 @@ fn parse_vertex(line: &str, default_color: &Color) -> Result<Vertex, String> {
         x: parse_coord("Error: Missing X", "Error: X isn't a valid number")?,
         y: parse_coord("Error: Missing Y", "Error: Y isn't a valid number")?,
         z: parse_coord("Error: Missing Z", "Error: Z isn't a valid number")?,
-        color: default_color.clone(),
+        color: default_color,
     })
 }
 
@@ -46,12 +45,10 @@ fn extract_vertices(file_content: &str) -> Result<Vec<Vertex>, String> {
     file_content
         .lines()
         .filter(|line| line.starts_with("v "))
-        .map(|line| parse_vertex(line, &default_color))
+        .map(|line| parse_vertex(line, default_color))
         .collect()
 }
-///
 
-///
 fn parse_face(line: &str) -> Result<Vec<Face>, String> {
     let indices: Vec<u32> = line
         .split_whitespace()
@@ -96,7 +93,6 @@ fn extract_faces(file_content: &str) -> Result<Vec<Face>, String> {
 
     Ok(final_faces)
 }
-///
 
 pub fn parse_obj_file(file_path: &str) -> Result<Mesh, String> {
     let file_content = read_file_to_string(file_path)?;
