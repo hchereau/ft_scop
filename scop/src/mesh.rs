@@ -1,3 +1,4 @@
+#[derive(Debug)]
 #[repr(C)]
 pub struct Vertex {
     pub x: f32,
@@ -5,7 +6,7 @@ pub struct Vertex {
     pub z: f32,
     pub color: Color,
 }
-
+#[derive(Debug)]
 #[repr(C)]
 pub struct Face {
     pub v1: u32,
@@ -13,6 +14,7 @@ pub struct Face {
     pub v3: u32,
 }
 
+#[derive(Debug, Clone, Copy)]
 #[repr(C)]
 pub struct Color {
     pub r: u8,
@@ -26,6 +28,7 @@ pub struct Mesh {
     pub faces: Vec<Face>,
 }
 
+#[allow(dead_code)]
 impl Mesh {
     pub fn new() -> Self {
         Self {

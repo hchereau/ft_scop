@@ -1,8 +1,7 @@
 name: SCOP CI
 
 on:
-  push:
-    branches: [ "main" ]
+  push: 
   pull_request:
     branches: [ "main" ]
 
@@ -16,16 +15,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Rust & Vulkan)
+      - name: Install System Dependencies (C, C++, Vulkan)
+        # On utilise dnf UNIQUEMENT pour les dépendances de l'OS
         run: |
           dnf update -y
-          dnf install -y gcc rust cargo vulkan-headers vulkan-loader-devel
+          dnf install -y gcc gcc-c++ make vulkan-headers vulkan-loader-devel
+
+      - name: Setup Rust Toolchain
+        # L'action officielle qui gère parfaitement Rust, Cargo, Clippy et rustfmt
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
 
       - name: Check Formatting
+        working-directory: ./scop
         run: cargo fmt --all -- --check
 
       - name: Lint with Clippy
+        working-directory: ./scop
         run: cargo clippy --all-targets -- -D warnings
 
       - name: Run Unit Tests
+        working-directory: ./scop
         run: cargo test --verbose
